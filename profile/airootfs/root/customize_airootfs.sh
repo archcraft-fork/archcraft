@@ -6,6 +6,16 @@ set -e -u
 
 ## -------------------------------------------------------------- ##
 
+# fr_FR.UTF-8 locales
+sed -i 's/#\(fr_FR\.UTF-8\)/\1/' /etc/locale.gen
+locale-gen
+
+# France, Paris timezone
+ln -sf /usr/share/zoneinfo/Europe/Paris /etc/localtime
+
+# No password for members of wheel
+echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
 ## Fix Initrd Generation in Installed System
 cat > "/etc/mkinitcpio.d/linux.preset" <<- _EOF_
 	# mkinitcpio preset file for the 'linux' package
@@ -65,6 +75,11 @@ cat >> "/etc/pacman.conf" <<- EOL
 EOL
 
 ## -------------------------------------------------------------- ##
+## Add syno nfs share to autofs
+sed -i -e 's|/misc.*|/mnt /etc/auto.nfs --ghost,--timeout=60|g' /etc/autofs/auto.master
+systemctl enable autofs
+
+## -------------------------------------------------------------- ##
 
 ## Set zsh as default shell for new user
 sed -i -e 's#SHELL=.*#SHELL=/bin/zsh#g' /etc/default/useradd
@@ -78,14 +93,14 @@ if [[ ! -d "$rdir" ]]; then
 	mkdir "$rdir"
 fi
 
-rconfig=(alacritty bspwm geany gtk-3.0 Kvantum neofetch qt5ct ranger Thunar xfce4)
+rconfig=(alacritty geany gtk-3.0 Kvantum neofetch qt5ct Thunar xfce4)
 for cfg in "${rconfig[@]}"; do
 	if [[ -e "$sdir/.config/$cfg" ]]; then
 		cp -rf "$sdir"/.config/"$cfg" "$rdir"
 	fi
 done
 
-rcfg=('.oh-my-zsh' '.gtkrc-2.0' '.vim_runtime' '.vimrc' '.zshrc')
+rcfg=('.oh-my-zsh' '.gtkrc-2.0' '.zshrc')
 for cfile in "${rcfg[@]}"; do
 	if [[ -e "$sdir/$cfile" ]]; then
 		cp -rf "$sdir"/"$cfile" /root
@@ -100,13 +115,6 @@ cat >> "/etc/skel/.config/openbox/autostart" <<- EOL
 	## Help-App-Run-Once
 	help-and-tips &
 	sed -i -e '/## Help-App-Run-Once/Q' "\$HOME"/.config/openbox/autostart
-EOL
-
-sed -i -e '/## Welcome-App-Run-Once/Q' /etc/skel/.config/bspwm/bspwmrc
-cat >> "/etc/skel/.config/bspwm/bspwmrc" <<- EOL
-	## Help-App-Run-Once
-	help-and-tips &
-	sed -i -e '/## Help-App-Run-Once/Q' "\$HOME"/.config/bspwm/bspwmrc
 EOL
 
 

@@ -260,14 +260,19 @@ viewnior
 atril
 
 # Media
+smplayer
+smplayer-skins
+smplayer-themes
 mpc
 mpd
 ncmpcpp
 mplayer
 
 # Utilities
+aspell-fr
 acpi
 arandr
+catfish
 dialog
 dunst
 galculator
@@ -277,8 +282,8 @@ gnome-keyring
 inetutils
 inotify-tools
 jq
+keepassxc
 light
-meld
 nitrogen
 pastel
 picom
@@ -289,6 +294,7 @@ python2
 python-pywal
 rofi
 maim
+numlockx
 simplescreenrecorder
 slop
 udisks2
