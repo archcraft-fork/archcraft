@@ -113,8 +113,6 @@ udftools
 usb_modeswitch
 usbmuxd
 usbutils
-vim
-#virtualbox-guest-utils-nox
 vpnc
 wezterm-terminfo
 wireless-regdb
@@ -313,6 +311,7 @@ yad
 archcraft-openbox
 
 # Archcraft Packages
+archcraft-rmatrix
 archcraft-cursors
 archcraft-icons
 archcraft-themes
@@ -327,8 +326,6 @@ archcraft-neofetch
 archcraft-welcome
 archcraft-music
 archcraft-omz
-archcraft-ranger
-archcraft-vim
 archcraft-config-geany
 archcraft-config-music
 archcraft-config-qt
