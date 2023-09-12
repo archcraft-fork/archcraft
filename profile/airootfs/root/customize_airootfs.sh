@@ -154,3 +154,5 @@ for app in "${apps[@]}"; do
 done
 
 ## -------------------------------------------------------------- ##
+## For Cava music visualizer
+modprobe snd_aloop
